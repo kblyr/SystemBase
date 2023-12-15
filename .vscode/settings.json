@@ -1,0 +1,9 @@
+{
+  "files.exclude": {
+      "**/bin": true,
+      "**/obj": true
+  },
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "editor.tabSize": 4,
+  "prettier.vueIndentScriptAndStyle": true,
+}
