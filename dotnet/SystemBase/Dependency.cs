@@ -64,3 +64,27 @@ public sealed class AssemblyMarker : IAssemblyMarker
         }
     }
 }
+
+public sealed record DependencyOptions : IDependencyOptions
+{
+    internal DependencyOptions() {}
+
+    public DependencyFeature IdGenerator { get; } = DependencyFeature.Default;
+    public DependencyFeature PasswordHash { get; } = DependencyFeature.Default;
+    public DependencyFeature PermissionVerifier { get; } = DependencyFeature.Default;
+    public DependencyFeature RandomStringGenerator { get; } = DependencyFeature.Default;
+}
+
+public static class DependencyExtensions
+{
+    public static IServiceCollection AddSystemBase(this IServiceCollection services, ConfigureOptions<DependencyOptions>? configure = null)
+    {
+        var options = new DependencyOptions();
+        configure?.Invoke(options);
+        services.TryAddScoped<IPermissionVerifier, PermissionVerifier>(options.PermissionVerifier);
+        services.TryAddSingleton<IIdGenerator, IdGenerator>(options.IdGenerator);
+        services.TryAddSingleton<IPasswordHash, PasswordHash>(options.PasswordHash);
+        services.TryAddSingleton<IRandomStringGenerator, RandomStringGenerator>(options.RandomStringGenerator);
+        return services;
+    }
+}
