@@ -4,16 +4,18 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>Kblyr.SystemBase</PackageId>
+    <PackageId>Kblyr.SystemBase.EF</PackageId>
     <Version>0.2.0</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
-
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="NewId" Version="4.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SystemBase\SystemBase.csproj" />
   </ItemGroup>
 
 </Project>
