@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.WebAPI.Server", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.EF.PostgreSQL", "SystemBase.EF.PostgreSQL\SystemBase.EF.PostgreSQL.csproj", "{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.EF.SqlServer", "SystemBase.EF.SqlServer\SystemBase.EF.SqlServer.csproj", "{32B07152-B482-417A-928A-1E19C03C6315}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32B07152-B482-417A-928A-1E19C03C6315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32B07152-B482-417A-928A-1E19C03C6315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32B07152-B482-417A-928A-1E19C03C6315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32B07152-B482-417A-928A-1E19C03C6315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

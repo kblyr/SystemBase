@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>net7.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <PackageId>Kblyr.SystemBase.EF.SqlServer</PackageId>
+      <Version>0.5.0</Version>
+      <Authors>John Josua Paderon</Authors>
+      <Company>Kblyr</Company>
+    </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SystemBase.EF\SystemBase.EF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.14" />
+  </ItemGroup>
+
+</Project>
