@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase", "SystemBase\Sy
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.EF", "SystemBase.EF\SystemBase.EF.csproj", "{0112801B-E9ED-45EC-880E-6A9DACE4CF8F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.WebAPI", "SystemBase.WebAPI\SystemBase.WebAPI.csproj", "{9BE977D0-A8A6-4DC3-98DA-29504E4F0F69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{0112801B-E9ED-45EC-880E-6A9DACE4CF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0112801B-E9ED-45EC-880E-6A9DACE4CF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0112801B-E9ED-45EC-880E-6A9DACE4CF8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BE977D0-A8A6-4DC3-98DA-29504E4F0F69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BE977D0-A8A6-4DC3-98DA-29504E4F0F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BE977D0-A8A6-4DC3-98DA-29504E4F0F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BE977D0-A8A6-4DC3-98DA-29504E4F0F69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
