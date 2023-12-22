@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.WebAPI", "System
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.WebAPI.Server", "SystemBase.WebAPI.Server\SystemBase.WebAPI.Server.csproj", "{92AACF74-EBC8-4967-B9DD-F67C57764D23}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemBase.EF.PostgreSQL", "SystemBase.EF.PostgreSQL\SystemBase.EF.PostgreSQL.csproj", "{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{92AACF74-EBC8-4967-B9DD-F67C57764D23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92AACF74-EBC8-4967-B9DD-F67C57764D23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92AACF74-EBC8-4967-B9DD-F67C57764D23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92EC6FC7-4D20-43FA-AD80-8050E5D6B2AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

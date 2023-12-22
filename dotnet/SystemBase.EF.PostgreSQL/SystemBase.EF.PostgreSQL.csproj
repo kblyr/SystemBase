@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <PackageId>Kblyr.SystemBase.EF.PostgreSQL</PackageId>
+    <Version>0.5.0</Version>
+    <Authors>John Josua Paderon</Authors>
+    <Company>Kblyr</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SystemBase.EF\SystemBase.EF.csproj" />
+  </ItemGroup>
+
+</Project>
