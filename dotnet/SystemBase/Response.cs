@@ -9,9 +9,9 @@ public sealed record Success : ICQRSResponse
     public static readonly Success Instance = new();
 }
 
-public sealed record Error : ICQRSErrorResponse
+public sealed record Failed : ICQRSErrorResponse
 {
-    public static readonly Error Instance = new();
+    public static readonly Failed Instance = new();
 }
 
 public sealed record VerifyPermissionFailed : ICQRSErrorResponse
