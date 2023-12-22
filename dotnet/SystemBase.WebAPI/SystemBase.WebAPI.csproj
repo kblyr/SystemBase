@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <PackageId>Kblyr.SystemBase</PackageId>
+    <PackageId>Kblyr.SystemBase.WebAPI</PackageId>
     <Version>0.4.1</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
