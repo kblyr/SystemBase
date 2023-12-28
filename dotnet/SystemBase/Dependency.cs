@@ -14,7 +14,7 @@ public record DependencyFeature
         return this;
     }
 
-    public static readonly DependencyFeature Default = new();
+    public static readonly DependencyFeature Default = new() { IsIncluded = false };
 
     public static implicit operator bool(DependencyFeature feature) => feature.IsIncluded;
 }
