@@ -6,11 +6,11 @@ public sealed record DependencyOptions : IDependencyOptions
 {
     internal DependencyOptions() {}
 
-    public DependencyFeature AccessTokenGenerator { get; } = DependencyFeature.Default;
-    public DependencyFeature APIMediator { get; } = DependencyFeature.Default;
-    public DependencyFeature CurrentAuditInfoProvider { get; } = DependencyFeature.Default;
-    public DependencyFeature ResponseMapper { get; } = DependencyFeature.Default;
-    public DependencyFeature<ResponseTypeMapRegistrySettings> ResponseTypeMapRegistry { get; } = DependencyFeature<ResponseTypeMapRegistrySettings>.Default;
+    public DependencyFeature AccessTokenGenerator { get; } = DependencyFeature.Default();
+    public DependencyFeature APIMediator { get; } = DependencyFeature.Default();
+    public DependencyFeature CurrentAuditInfoProvider { get; } = DependencyFeature.Default();
+    public DependencyFeature ResponseMapper { get; } = DependencyFeature.Default();
+    public DependencyFeature<ResponseTypeMapRegistrySettings> ResponseTypeMapRegistry { get; } = DependencyFeature<ResponseTypeMapRegistrySettings>.Default();
 }
 
 public sealed record ResponseTypeMapRegistrySettings : IDependencyFeatureSettings

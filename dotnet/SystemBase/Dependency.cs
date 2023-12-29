@@ -6,7 +6,7 @@ public interface IDependencyOptions {}
 
 public record DependencyFeature
 {
-    public bool IsIncluded { get; private set; } = false;
+    public bool IsIncluded { get; protected set; } = false;
 
     public DependencyFeature Include(bool isIncluded = true)
     {
@@ -14,7 +14,7 @@ public record DependencyFeature
         return this;
     }
 
-    public static readonly DependencyFeature Default = new() { IsIncluded = false };
+    public static DependencyFeature Default() => new() { IsIncluded = false };
 
     public static implicit operator bool(DependencyFeature feature) => feature.IsIncluded;
 }
@@ -30,7 +30,7 @@ public record DependencyFeature<TSettings> : DependencyFeature where TSettings :
         return this;
     }
 
-    public static new readonly DependencyFeature<TSettings> Default = new();
+    public static new DependencyFeature<TSettings> Default() => new() { IsIncluded = false };
 }
 
 public interface IDependencyFeatureSettings {}
@@ -69,11 +69,11 @@ public sealed record DependencyOptions : IDependencyOptions
 {
     internal DependencyOptions() {}
 
-    public DependencyFeature HashIdConverter { get; } = DependencyFeature.Default;
-    public DependencyFeature IdGenerator { get; } = DependencyFeature.Default;
-    public DependencyFeature PasswordHash { get; } = DependencyFeature.Default;
-    public DependencyFeature PermissionVerifier { get; } = DependencyFeature.Default;
-    public DependencyFeature RandomStringGenerator { get; } = DependencyFeature.Default;
+    public DependencyFeature HashIdConverter { get; } = DependencyFeature.Default();
+    public DependencyFeature IdGenerator { get; } = DependencyFeature.Default();
+    public DependencyFeature PasswordHash { get; } = DependencyFeature.Default();
+    public DependencyFeature PermissionVerifier { get; } = DependencyFeature.Default();
+    public DependencyFeature RandomStringGenerator { get; } = DependencyFeature.Default();
 }
 
 public static class DependencyExtensions

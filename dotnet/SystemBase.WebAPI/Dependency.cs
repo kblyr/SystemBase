@@ -4,7 +4,7 @@ public sealed record DependencyOptions : IDependencyOptions
 {
     internal DependencyOptions() {}
 
-    public DependencyFeature APIResponseTypeKeyProvider { get; } = DependencyFeature.Default;
+    public DependencyFeature APIResponseTypeKeyProvider { get; } = DependencyFeature.Default();
 }
 
 public static class DependencyExtensions
