@@ -387,7 +387,7 @@ sealed class HashIdConverter : IHashIdConverter
 
         try
         {
-            return ids.Select(FromByte).ToArray();
+            return ids.Select(FromByte);
         }
         catch
         {
@@ -443,7 +443,7 @@ sealed class HashIdConverter : IHashIdConverter
 
         try
         {
-            return ids.Select(FromInt16).ToArray();
+            return ids.Select(FromInt16);
         }
         catch
         {
@@ -499,7 +499,7 @@ sealed class HashIdConverter : IHashIdConverter
 
         try
         {
-            return ids.Select(FromInt32).ToArray();
+            return ids.Select(FromInt32);
         }
         catch
         {
@@ -555,7 +555,7 @@ sealed class HashIdConverter : IHashIdConverter
 
         try
         {
-            return ids.Select(FromInt64).ToArray();
+            return ids.Select(FromInt64);
         }
         catch
         {
