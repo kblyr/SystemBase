@@ -16,7 +16,7 @@ public static class IServiceCollectionExtensions
             .AddSingleton<MapsterMapper.IMapper, ServiceMapper>();
     }
 
-    public static IServiceCollection AddJILAuthentication(this IServiceCollection services, JWTOptions options)
+    public static IServiceCollection AddSystemBaseAuthentication(this IServiceCollection services, JWTOptions options)
     {
         services.AddAuthentication(authOptions => {
             authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
