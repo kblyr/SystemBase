@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 namespace SystemBase;
 
 public sealed record AuditInfo
@@ -9,4 +11,9 @@ public sealed record AuditInfo
 public interface ICurrentAuditInfoProvider 
 {
     AuditInfo Value { get; }
+}
+
+public interface IAuditInfoExtractor
+{
+    AuditInfo Extract(ClaimsPrincipal principal);
 }
