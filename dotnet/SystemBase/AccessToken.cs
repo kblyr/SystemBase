@@ -2,8 +2,8 @@ namespace SystemBase;
 
 public sealed record AccessToken
 {
-    public required string TokenString { get; init; }
-    public DateTime ValidUntil { get; init; }
+    public required string Token { get; init; }
+    public DateTimeOffset ExpiresOn { get; init; }
 }
 
 public sealed record AccessTokenGeneratorPayload
