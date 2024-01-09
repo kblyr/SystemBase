@@ -6,14 +6,7 @@ public sealed record AccessToken
     public DateTimeOffset ExpiresOn { get; init; }
 }
 
-public sealed record AccessTokenGeneratorPayload
-{
-    public int Id { get; init; }
-    public required string Username { get; init; }
-    public required string FullName { get; init; }
-}
-
 public interface IAccessTokenGenerator
 {
-    AccessToken Generate(AccessTokenGeneratorPayload payload);
+    AccessToken Generate(IDictionary<string, string> payload);
 }
