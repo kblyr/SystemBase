@@ -33,7 +33,7 @@ sealed class PermissionVerifier : IPermissionVerifier
         return result.IsAdministrator || (result.PermissionIds.Length > 0 && result.PermissionIds.Contains(permissionId));
     }
 
-    async Task<PermissionsLoaderResult> TryLoad(CancellationToken cancellationToken)
+    async ValueTask<PermissionsLoaderResult> TryLoad(CancellationToken cancellationToken)
     {
         return _loaderResult ??= await _permissionsLoader.Load(cancellationToken) ?? new();
     }
