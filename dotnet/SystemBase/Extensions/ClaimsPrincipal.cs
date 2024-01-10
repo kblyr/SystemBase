@@ -1,3 +1,5 @@
+using System.Security.Claims;
+
 namespace SystemBase;
 
 public static class ClaimsPrincipalExtensions
