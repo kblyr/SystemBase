@@ -48,7 +48,6 @@ public static class QueryableExtensions
 
     public static async Task<int> CountPage<T>(this IQueryable<T> query, int pageSize, CancellationToken cancellationToken = default)
     {
-        var count = await query.CountAsync(cancellationToken);
-        return Convert.ToInt32(Math.Ceiling((count / pageSize) + 0M));
+        return Convert.ToInt32(Math.Ceiling(await query.CountAsync(cancellationToken) / (pageSize + 0M)));
     }
 }
