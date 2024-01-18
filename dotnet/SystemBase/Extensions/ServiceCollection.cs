@@ -76,4 +76,18 @@ public static class ServiceCollectionExtensions
         services.TryAddTransient<TService, TImplementation>();
         with(services);
     }
+
+    public static IServiceCollection AddAuditInfoSource<T>(this IServiceCollection services) where T : class, IAuditInfoSource
+    {
+        services.AddScoped<IAuditInfoSource, T>();
+        return services;
+    }
+
+    public static IServiceCollection AddAuditInfoSource<T>(this IServiceCollection services, Func<IServiceProvider, T> factory) where T : class, IAuditInfoSource
+    {
+        services.AddScoped<IAuditInfoSource, T>(factory);
+        return services;
+    }
+
+    public static IServiceCollection AddTimestampAuditInfo(this IServiceCollection services) => services.AddAuditInfoSource<TimestampAuditInfoSource>();
 }
