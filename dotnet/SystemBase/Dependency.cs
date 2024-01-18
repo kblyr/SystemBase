@@ -69,6 +69,7 @@ public sealed record DependencyOptions : IDependencyOptions
 {
     internal DependencyOptions() {}
 
+    public DependencyFeature AuditInfoProvider { get; } = DependencyFeature.Default();
     public DependencyFeature HashIdConverter { get; } = DependencyFeature.Default();
     public DependencyFeature IdGenerator { get; } = DependencyFeature.Default();
     public DependencyFeature PasswordHash { get; } = DependencyFeature.Default();
@@ -82,6 +83,7 @@ public static class DependencyExtensions
     {
         var options = new DependencyOptions();
         configure?.Invoke(options);
+        services.TryAddScoped<IAuditInfoProvider, AuditInfoProvider>(options.AuditInfoProvider);
         services.TryAddScoped<IPermissionVerifier, PermissionVerifier>(options.PermissionVerifier);
         services.TryAddSingleton<IHashIdConverter, HashIdConverter>(options.HashIdConverter);
         services.TryAddSingleton<IIdGenerator, IdGenerator>(options.IdGenerator);
