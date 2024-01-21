@@ -8,7 +8,6 @@ public sealed record DependencyOptions : IDependencyOptions
 
     public DependencyFeature AccessTokenGenerator { get; } = DependencyFeature.Default();
     public DependencyFeature APIMediator { get; } = DependencyFeature.Default();
-    public DependencyFeature CurrentAuditInfoProvider { get; } = DependencyFeature.Default();
     public DependencyFeature ResponseMapper { get; } = DependencyFeature.Default();
     public DependencyFeature<ResponseTypeMapRegistrySettings> ResponseTypeMapRegistry { get; } = DependencyFeature<ResponseTypeMapRegistrySettings>.Default();
 }
@@ -31,7 +30,6 @@ public static class DependencyExtensions
         configure?.Invoke(options);
         services.TryAddTransient<IAPIMediator, APIMediator>(options.APIMediator);
         services.TryAddTransient<IResponseMapper, ResponseMapper>(options.ResponseMapper);
-        services.TryAddScoped<ICurrentAuditInfoProvider, CurrentAuditInfoProvider>(options.CurrentAuditInfoProvider, services => services.AddHttpContextAccessor());
         services.TryAddSingleton<IAccessTokenGenerator, AccessTokenGenerator>(options.AccessTokenGenerator);
         services.TryAddSingleton<IResponseTypeMapRegistry, ResponseTypeMapRegistry>(options.ResponseTypeMapRegistry, services => services.TryAddSingleton(sp => new ResponseTypeMapAssemblyScanner(options.ResponseTypeMapRegistry.Settings.Assemblies)));
         return services;

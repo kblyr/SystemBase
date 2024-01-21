@@ -1,28 +1,28 @@
 namespace SystemBase;
 
-sealed class CurrentAuditInfoProvider : ICurrentAuditInfoProvider
+sealed class UserIdAuditInfoSource : IAuditInfoSource
 {
     readonly IHttpContextAccessor _contextAccessor;
-    readonly IHashIdConverter _hashIdConverter;
-    readonly IAuditInfoExtractor _extractor;
+    readonly string _claimType;
 
-    public CurrentAuditInfoProvider(IHttpContextAccessor contextAccessor, IHashIdConverter hashIdConverter, IAuditInfoExtractor extractor)
+    public UserIdAuditInfoSource(IHttpContextAccessor contextAccessor, string claimType)
     {
         _contextAccessor = contextAccessor;
-        _hashIdConverter = hashIdConverter;
-        _extractor = extractor;
+        _claimType = claimType;
     }
 
-    AuditInfo? _value;
-    public AuditInfo Value => (_value ??= Get()) with { Timestamp = DateTimeOffset.Now };
-
-    AuditInfo Get()
+    public ValueTask Load(AuditInfo info, CancellationToken cancellationToken = default)
     {
-        if (_contextAccessor.HttpContext is not null && _contextAccessor.HttpContext.User.Identity is IIdentity identity && identity.IsAuthenticated)
+        info.Set(AuditInfo.Keys.UserId, () =>
         {
-            return _extractor.Extract(_contextAccessor.HttpContext.User);
-        }
+            if (_contextAccessor.HttpContext is not HttpContext context || context.User.Identity is not IIdentity identity || !identity.IsAuthenticated || !context.User.TryGetClaimInt32(_claimType, out int value))
+            {
+                return null;
+            }
 
-        return new AuditInfo();
+            return value;
+        });
+
+        return ValueTask.CompletedTask;
     }
 }
