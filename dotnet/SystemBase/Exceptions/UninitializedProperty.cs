@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace SystemBase;
 
 public class UninitializedPropertyException : Exception
@@ -17,11 +15,6 @@ public class UninitializedPropertyException : Exception
     }
 
     public UninitializedPropertyException(string propertyName, string? message, Exception? innerException) : base(message, innerException)
-    {
-        PropertyName = propertyName;
-    }
-
-    protected UninitializedPropertyException(string propertyName, SerializationInfo info, StreamingContext context) : base(info, context)
     {
         PropertyName = propertyName;
     }

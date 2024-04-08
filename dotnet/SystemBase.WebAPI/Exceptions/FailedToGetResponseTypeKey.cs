@@ -1,5 +1,3 @@
-using System.Runtime.Serialization;
-
 namespace SystemBase;
 
 public class FailedToGetAPIResponseTypeKeyException : Exception
@@ -17,11 +15,6 @@ public class FailedToGetAPIResponseTypeKeyException : Exception
     }
 
     public FailedToGetAPIResponseTypeKeyException(Type responseType, string? message, Exception? innerException) : base(message, innerException)
-    {
-        ResponseType = responseType;
-    }
-
-    protected FailedToGetAPIResponseTypeKeyException(Type responseType, SerializationInfo info, StreamingContext context) : base(info, context)
     {
         ResponseType = responseType;
     }

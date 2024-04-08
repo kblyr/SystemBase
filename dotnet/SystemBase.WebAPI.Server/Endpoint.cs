@@ -29,7 +29,7 @@ public class APIEndpoint<TAPIRequest> : Endpoint<TAPIRequest> where TAPIRequest 
             return;
         }
 
-        HttpContext.Response.Headers.Add(APIHeaders.ResponseType, registryKeyProvider.Get(definition.ApiResponseType));
+        HttpContext.Response.Headers.Append(APIHeaders.ResponseType, registryKeyProvider.Get(definition.ApiResponseType));
         await SendAsync(mapper.Map(response, definition.ResponseType, definition.ApiResponseType), definition.StatusCode, cancellationToken);
     }
 
