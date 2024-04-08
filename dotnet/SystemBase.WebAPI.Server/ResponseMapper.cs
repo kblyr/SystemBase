@@ -30,7 +30,7 @@ sealed class ResponseMapper : IResponseMapper
             };
         }
 
-        _contextAccessor.HttpContext?.Response.Headers.Add(APIHeaders.ResponseType, _registryKeyProvider.Get(definition.ApiResponseType));
+        _contextAccessor.HttpContext?.Response.Headers.Append(APIHeaders.ResponseType, _registryKeyProvider.Get(definition.ApiResponseType));
         return new ObjectResult(_mapper.Map(response, definition.ResponseType, definition.ApiResponseType))
         {
             StatusCode = definition.StatusCode
