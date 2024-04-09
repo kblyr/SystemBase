@@ -1,15 +1,9 @@
 namespace SystemBase;
 
-sealed class UserIdAuditInfoSource : IAuditInfoSource
+sealed class UserIdAuditInfoSource(IHttpContextAccessor contextAccessor, string claimType) : IAuditInfoSource
 {
-    readonly IHttpContextAccessor _contextAccessor;
-    readonly string _claimType;
-
-    public UserIdAuditInfoSource(IHttpContextAccessor contextAccessor, string claimType)
-    {
-        _contextAccessor = contextAccessor;
-        _claimType = claimType;
-    }
+    readonly IHttpContextAccessor _contextAccessor = contextAccessor;
+    readonly string _claimType = claimType;
 
     public ValueTask Load(AuditInfo info, CancellationToken cancellationToken = default)
     {

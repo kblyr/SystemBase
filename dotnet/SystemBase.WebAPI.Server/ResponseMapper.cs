@@ -5,20 +5,12 @@ public interface IResponseMapper
     IActionResult Map(ICQRSResponse response);
 }
 
-sealed class ResponseMapper : IResponseMapper
+sealed class ResponseMapper(IResponseTypeMapRegistry registry, IAPIResponseTypeRegistryKeyProvider registryKeyProvider, MapsterMapper.IMapper mapper, IHttpContextAccessor contextAccessor) : IResponseMapper
 {
-    readonly IResponseTypeMapRegistry _registry;
-    readonly IAPIResponseTypeRegistryKeyProvider _registryKeyProvider;
-    readonly MapsterMapper.IMapper _mapper;
-    readonly IHttpContextAccessor _contextAccessor;
-
-    public ResponseMapper(IResponseTypeMapRegistry registry, IAPIResponseTypeRegistryKeyProvider registryKeyProvider, MapsterMapper.IMapper mapper, IHttpContextAccessor contextAccessor)
-    {
-        _registry = registry;
-        _registryKeyProvider = registryKeyProvider;
-        _mapper = mapper;
-        _contextAccessor = contextAccessor;
-    }
+    readonly IResponseTypeMapRegistry _registry = registry;
+    readonly IAPIResponseTypeRegistryKeyProvider _registryKeyProvider = registryKeyProvider;
+    readonly MapsterMapper.IMapper _mapper = mapper;
+    readonly IHttpContextAccessor _contextAccessor = contextAccessor;
 
     public IActionResult Map(ICQRSResponse response)
     {

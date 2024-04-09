@@ -9,13 +9,13 @@ sealed class APIResponseTypeRegistryKeyProvider : IAPIResponseTypeRegistryKeyPro
 {
     static readonly Type t_schemaIdAttr = typeof(SchemaIdAttribute);
 
-    readonly Dictionary<Type, string> _registryKeys = new();
+    readonly Dictionary<Type, string> _registryKeys = [];
 
     public string Get(Type responseType)
     {
-        if (_registryKeys.ContainsKey(responseType))
+        if (_registryKeys.TryGetValue(responseType, out string? value))
         {
-            return _registryKeys[responseType];
+            return value;
         }
 
         var schemaIdAttr = responseType.GetCustomAttributes(t_schemaIdAttr, false).FirstOrDefault() as SchemaIdAttribute;

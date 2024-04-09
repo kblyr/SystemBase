@@ -1,14 +1,9 @@
 namespace SystemBase;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class SchemaIdAttribute : Attribute
+public class SchemaIdAttribute(string schemaId) : Attribute
 {
-    public string SchemaId { get; }
-
-    public SchemaIdAttribute(string schemaId)
-    {
-        SchemaId = schemaId;
-    }
+    public string SchemaId { get; } = schemaId;
 }
 
 public static class SchemaIds

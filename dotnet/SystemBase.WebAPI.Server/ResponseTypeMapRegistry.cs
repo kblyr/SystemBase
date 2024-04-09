@@ -22,15 +22,10 @@ public record struct ResponseTypeMapDefinition
     int StatusCode
 );
 
-sealed class ResponseTypeMapRegistry : IResponseTypeMapRegistry
+sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScanner) : IResponseTypeMapRegistry
 {
-    readonly Dictionary<Type, ResponseTypeMapDefinition> _definitions = new();
-    readonly ResponseTypeMapAssemblyScanner _assemblyScanner;
-
-    public ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScanner)
-    {
-        _assemblyScanner = assemblyScanner;
-    }
+    readonly Dictionary<Type, ResponseTypeMapDefinition> _definitions = [];
+    readonly ResponseTypeMapAssemblyScanner _assemblyScanner = assemblyScanner;
 
     public ResponseTypeMapDefinition? this[Type responseType]
     {
@@ -53,11 +48,7 @@ sealed class ResponseTypeMapRegistry : IResponseTypeMapRegistry
 
     public IResponseTypeMapRegistry Register(ResponseTypeMapDefinition definition)
     {
-        if (!_definitions.ContainsKey(definition.ResponseType))
-        {
-            _definitions.Add(definition.ResponseType, definition);
-        }
-
+        Register(definition.ResponseType, definition.ApiResponseType, definition.StatusCode);
         return this;
     }
 
@@ -73,9 +64,9 @@ sealed class ResponseTypeMapRegistry : IResponseTypeMapRegistry
 
     public bool TryGet(Type responseType, out ResponseTypeMapDefinition definition)
     {
-        if (_definitions.ContainsKey(responseType))
+        if (_definitions.TryGetValue(responseType, out ResponseTypeMapDefinition value))
         {
-            definition = _definitions[responseType];
+            definition = value;
             return true;
         }
 
@@ -90,16 +81,11 @@ sealed class ResponseTypeMapRegistry : IResponseTypeMapRegistry
     }
 }
 
-public sealed class ResponseTypeMapAssemblyScanner 
+public sealed class ResponseTypeMapAssemblyScanner(Assembly[] assemblies)
 {
-    readonly Assembly[] _assemblies;
+    readonly Assembly[] _assemblies = assemblies;
 
     public bool IsScanned { get; private set; }
-
-    public ResponseTypeMapAssemblyScanner(Assembly[] assemblies)
-    {
-        _assemblies = assemblies;
-    }
 
     public void Scan(IResponseTypeMapRegistry registry)
     {

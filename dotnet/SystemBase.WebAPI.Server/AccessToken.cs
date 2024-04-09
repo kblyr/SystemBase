@@ -1,13 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
+
 namespace SystemBase;
 
-sealed class AccessTokenGenerator : IAccessTokenGenerator
+sealed class AccessTokenGenerator(IOptions<JWTOptions> jwt) : IAccessTokenGenerator
 {
-    readonly IOptions<JWTOptions> _jwt;
-
-    public AccessTokenGenerator(IOptions<JWTOptions> jwt)
-    {
-        _jwt = jwt;
-    }
+    readonly IOptions<JWTOptions> _jwt = jwt;
 
     public AccessToken Generate(IDictionary<string, string> payload)
     {
@@ -20,7 +17,7 @@ sealed class AccessTokenGenerator : IAccessTokenGenerator
             Issuer = _jwt.Value.Issuer,
             Audience = _jwt.Value.Audience
         };
-        var tokenHandler = new System.IdentityModel.Tokens.Jwt.JwtSecurityTokenHandler();
+        var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return new AccessToken
         {

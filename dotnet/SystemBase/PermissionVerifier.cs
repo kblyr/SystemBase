@@ -6,16 +6,11 @@ public interface IPermissionVerifier
     ValueTask<bool> Verify(int permissionId, CancellationToken cancellationToken = default);
 }
 
-sealed class PermissionVerifier : IPermissionVerifier
+sealed class PermissionVerifier(IPermissionsLoader permissionsLoader) : IPermissionVerifier
 {
-    readonly IPermissionsLoader _permissionsLoader;
+    readonly IPermissionsLoader _permissionsLoader = permissionsLoader;
     
     PermissionsLoaderResult? _loaderResult;
-
-    public PermissionVerifier(IPermissionsLoader permissionsLoader)
-    {
-        _permissionsLoader = permissionsLoader;
-    }
 
     public async ValueTask<bool> IsAdministrator(CancellationToken cancellationToken = default)
     {

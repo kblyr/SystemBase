@@ -41,14 +41,9 @@ public interface IHashIdConverter
     string? FromNullableGuid(Guid? id);
 }
 
-sealed class HashIdConverter : IHashIdConverter
+sealed class HashIdConverter(IOptions<HashIdConverterOptions> options) : IHashIdConverter
 {
-    readonly IHashids _hashids;
-
-    public HashIdConverter(IOptions<HashIdConverterOptions> options)
-    {
-        _hashids = new Hashids(options.Value.Salt, options.Value.MinLength);
-    }
+    readonly Hashids _hashids = new(options.Value.Salt, options.Value.MinLength);
 
     public byte ToByte(string hash)
     {
@@ -88,7 +83,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (string.IsNullOrEmpty(hash))
         {
-            return Array.Empty<byte>();
+            return [];
         }
 
         try
@@ -97,7 +92,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<byte>();
+            return [];
         }
     }
 
@@ -105,7 +100,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (hashes is null || !hashes.Any())
         {
-            return Array.Empty<byte>();
+            return [];
         }
 
         try
@@ -114,7 +109,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<byte>();
+            return [];
         }
     }
 
@@ -156,7 +151,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (string.IsNullOrEmpty(hash))
         {
-            return Array.Empty<short>();
+            return [];
         }
 
         try
@@ -165,7 +160,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<short>();
+            return [];
         }
     }
 
@@ -173,7 +168,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (hashes is null || !hashes.Any())
         {
-            return Array.Empty<short>();
+            return [];
         }
 
         try
@@ -182,7 +177,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<short>();
+            return [];
         }
     }
 
@@ -224,7 +219,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (string.IsNullOrEmpty(hash))
         {
-            return Array.Empty<int>();
+            return [];
         }
 
         try
@@ -233,7 +228,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<int>();
+            return [];
         }
     }
 
@@ -241,7 +236,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (hashes is null || !hashes.Any())
         {
-            return Array.Empty<int>();
+            return [];
         }
 
         try
@@ -250,7 +245,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<int>();
+            return [];
         }
     }
 
@@ -292,7 +287,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (string.IsNullOrEmpty(hash))
         {
-            return Array.Empty<long>();
+            return [];
         }
 
         try
@@ -301,7 +296,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<long>();
+            return [];
         }
     }
 
@@ -309,7 +304,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (hashes is null || !hashes.Any())
         {
-            return Array.Empty<long>();
+            return [];
         }
 
         try
@@ -318,7 +313,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<long>();
+            return [];
         }
     }
 
@@ -382,7 +377,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (ids is null || !ids.Any())
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         try
@@ -391,7 +386,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<string>();
+            return [];
         }
     }
 
@@ -438,7 +433,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (ids is null || !ids.Any())
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         try
@@ -447,7 +442,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<string>();
+            return [];
         }
     }
 
@@ -494,7 +489,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (ids is null || !ids.Any())
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         try
@@ -503,7 +498,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<string>();
+            return [];
         }
     }
 
@@ -550,7 +545,7 @@ sealed class HashIdConverter : IHashIdConverter
     {
         if (ids is null || !ids.Any())
         {
-            return Array.Empty<string>();
+            return [];
         }
 
         try
@@ -559,7 +554,7 @@ sealed class HashIdConverter : IHashIdConverter
         }
         catch
         {
-            return Array.Empty<string>();
+            return [];
         }
     }
     

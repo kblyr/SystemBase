@@ -97,14 +97,9 @@ public interface IAuditInfoProvider
     ValueTask<AuditInfo> Get(CancellationToken cancellationToken = default);
 }
 
-sealed class AuditInfoProvider : IAuditInfoProvider
+sealed class AuditInfoProvider(IEnumerable<IAuditInfoSource> sources) : IAuditInfoProvider
 {
-    readonly IEnumerable<IAuditInfoSource> _sources;
-
-    public AuditInfoProvider(IEnumerable<IAuditInfoSource> sources)
-    {
-        _sources = sources;
-    }
+    readonly IEnumerable<IAuditInfoSource> _sources = sources;
 
     public async ValueTask<AuditInfo> Get(CancellationToken cancellationToken = default)
     {

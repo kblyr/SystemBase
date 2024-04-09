@@ -62,7 +62,7 @@ sealed class APIMediator : IAPIMediator
         where TRequestFrom : IAPIRequest
         where TRequestTo : ICQRSRequest
     {
-        var response = await Send<TRequestFrom, TRequestTo>(requestFrom, mutateRequest, cancellationToken);
+        var response = await Send(requestFrom, mutateRequest, cancellationToken);
         return _responseMapper.Map(response);
     }
 }
