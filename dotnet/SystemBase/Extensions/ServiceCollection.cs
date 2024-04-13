@@ -95,5 +95,10 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddTimestampAuditInfo(this IServiceCollection services, Func<DateTimeOffset>? factory = null) => services.AddAuditInfoSource(sp => new TimestampAuditInfoSource(factory ?? (() => DateTimeOffset.UtcNow)));
+    public static IServiceCollection AddTimestampAuditInfo(this IServiceCollection services, Func<DateTimeOffset>? factory = null)
+    {
+        factory ??= () => DateTimeOffset.UtcNow;
+        services.AddAuditInfoSource(sp => new TimestampAuditInfoSource(factory));
+        return services;
+    }
 }
