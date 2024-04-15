@@ -114,11 +114,13 @@ sealed class AuditInfoProvider(IEnumerable<IAuditInfoSource> sources) : IAuditIn
     }
 }
 
-sealed class TimestampAuditInfoSource : IAuditInfoSource
+sealed class TimestampAuditInfoSource(Func<DateTimeOffset> factory) : IAuditInfoSource
 {
+    readonly Func<DateTimeOffset> _factory = factory;
+
     public ValueTask Load(AuditInfo info, CancellationToken cancellationToken = default)
     {
-        info.Set(AuditInfo.Keys.Timestamp, () => DateTimeOffset.Now);
+        info.Set(AuditInfo.Keys.Timestamp, _factory);
         return ValueTask.CompletedTask;
     }
 }

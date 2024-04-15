@@ -83,11 +83,22 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddAuditInfoSource<T>(this IServiceCollection services, Func<T> factory) where T : class, IAuditInfoSource
+    {
+        services.AddScoped<IAuditInfoSource, T>(sp => factory());
+        return services;
+    }
+
     public static IServiceCollection AddAuditInfoSource<T>(this IServiceCollection services, Func<IServiceProvider, T> factory) where T : class, IAuditInfoSource
     {
         services.AddScoped<IAuditInfoSource, T>(factory);
         return services;
     }
 
-    public static IServiceCollection AddTimestampAuditInfo(this IServiceCollection services) => services.AddAuditInfoSource<TimestampAuditInfoSource>();
+    public static IServiceCollection AddTimestampAuditInfo(this IServiceCollection services, Func<DateTimeOffset>? factory = null)
+    {
+        factory ??= () => DateTimeOffset.UtcNow;
+        services.AddAuditInfoSource(() => new TimestampAuditInfoSource(factory));
+        return services;
+    }
 }
