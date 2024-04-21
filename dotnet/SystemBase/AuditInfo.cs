@@ -25,20 +25,17 @@ public sealed class AuditInfo
 
     public void Set(string key, object? value)
     {
-        var infoValue = new AuditInfoValueReadOnly(value);
-        Set(key, infoValue);
+        Set(key, new AuditInfoValueReadOnly(value));
     }
 
     public void Set(string key, Func<object?> factory)
     {
-        var infoValue = new AuditInfoValueFactory(factory);
-        Set(key, infoValue);
+        Set(key, new AuditInfoValueFactory(factory));
     }
 
     public void Set(string key, Func<AuditInfo, object?> factory)
     {
-        var infoValue = new AuditInfoValueDependentFactory(this, factory);
-        Set(key, infoValue);
+        Set(key, new AuditInfoValueDependentFactory(this, factory));
     }
 
     public static class Keys
@@ -53,38 +50,22 @@ public interface IAuditInfoValue
     public object? Value { get; }
 }
 
-sealed class AuditInfoValueReadOnly : IAuditInfoValue
+sealed class AuditInfoValueReadOnly(object? value) : IAuditInfoValue
 {
-    public object? Value { get; }
-
-    internal AuditInfoValueReadOnly(object? value) 
-    {
-        Value = value;
-    }
+    public object? Value { get; } = value;
 }
 
-sealed class AuditInfoValueFactory : IAuditInfoValue
+sealed class AuditInfoValueFactory(Func<object?> factory) : IAuditInfoValue
 {
-    readonly Func<object?> _factory;
+    readonly Func<object?> _factory = factory;
     public object? Value => _factory();
-
-    public AuditInfoValueFactory(Func<object?> factory)
-    {
-        _factory = factory;
-    }
 }
 
-sealed class AuditInfoValueDependentFactory : IAuditInfoValue
+sealed class AuditInfoValueDependentFactory(AuditInfo info, Func<AuditInfo, object?> factory) : IAuditInfoValue
 {
-    readonly AuditInfo _info;
-    readonly Func<AuditInfo, object?> _factory;
+    readonly AuditInfo _info = info;
+    readonly Func<AuditInfo, object?> _factory = factory;
     public object? Value => _factory(_info);
-
-    public AuditInfoValueDependentFactory(AuditInfo info, Func<AuditInfo, object?> factory)
-    {
-        _info = info;
-        _factory = factory;
-    }
 }
 
 public interface IAuditInfoSource
