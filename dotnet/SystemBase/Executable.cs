@@ -1,27 +1,37 @@
 namespace SystemBase;
 
-public interface IExecutable<TResult> : IDisposable
+public interface IExecutable : IDisposable
 {
-    ValueTask<TResult> Execute(CancellationToken cancellationToken = default);
+    ValueTask<IExecutionResult> Execute(CancellationToken cancellationToken = default);
 }
 
-public interface IExecutable : IExecutable<Unit> {}
+public interface IExecutionResult {}
 
-public readonly struct Unit : IEquatable<Unit>, IComparable<Unit>
+public record ExecutionSuccess : IExecutionResult
 {
-    static readonly Unit _value = new();
+    static readonly ExecutionSuccess _instance = new();
 
-    public static Unit Value => _value;
+    public static ExecutionSuccess Instance => _instance;
 
-    public int CompareTo(Unit other) => 0;
+    protected ExecutionSuccess() {}
+}
 
-    public bool Equals(Unit other) => true;
+public record ExecutionError : IExecutionResult
+{
+    static readonly ExecutionError _instance = new();
 
-    public override bool Equals(object? obj) => true;
+    public static ExecutionError Instance => _instance;
 
-    public override int GetHashCode() => 0;
+    protected ExecutionError() {}
+}
 
-    public static bool operator ==(Unit _, Unit __) => true;
+[AttributeUsage(AttributeTargets.Class)]
+public class ExecutionResultAttribute(string key, bool isEmpty = false) : Attribute
+{
+    readonly string _key = key;
+    readonly bool _isEmpty = isEmpty;
 
-    public static bool operator !=(Unit _, Unit __) => false;
+    public string Key => _key;
+
+    public bool IsEmpty => _isEmpty;
 }
