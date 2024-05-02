@@ -70,6 +70,7 @@ public sealed record DependencyOptions : IDependencyOptions
     internal DependencyOptions() {}
 
     public DependencyFeature AuditInfoProvider { get; } = DependencyFeature.Default();
+    public DependencyFeature<ExecutionResultRegistrySettings> ExecutionResultRegistry { get; } = DependencyFeature<ExecutionResultRegistrySettings>.Default();
     public DependencyFeature HashIdConverter { get; } = DependencyFeature.Default();
     public DependencyFeature IdGenerator { get; } = DependencyFeature.Default();
     public DependencyFeature PasswordHash { get; } = DependencyFeature.Default();
@@ -85,10 +86,21 @@ public static class DependencyExtensions
         configure?.Invoke(options);
         services.TryAddScoped<IAuditInfoProvider, AuditInfoProvider>(options.AuditInfoProvider);
         services.TryAddScoped<IPermissionVerifier, PermissionVerifier>(options.PermissionVerifier);
+        services.TryAddSingleton<IExecutionResultRegistry, ExecutionResultRegistry>(options.ExecutionResultRegistry);
         services.TryAddSingleton<IHashIdConverter, HashIdConverter>(options.HashIdConverter);
         services.TryAddSingleton<IIdGenerator, IdGenerator>(options.IdGenerator);
         services.TryAddSingleton<IPasswordHash, PasswordHash>(options.PasswordHash);
         services.TryAddSingleton<IRandomStringGenerator, RandomStringGenerator>(options.RandomStringGenerator);
         return services;
     }
+}
+
+public sealed record ExecutionResultRegistrySettings : IDependencyFeatureSettings
+{
+    public IList<IExecutionResultRegistration> Registrations { get; } = [];
+}
+
+public interface IExecutionResultRegistration
+{
+    void Register(IExecutionResultRegistry registry);
 }

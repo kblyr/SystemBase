@@ -27,6 +27,12 @@ public static class ServiceCollectionExtensions
         with(services);
     }
 
+    public static void TryAddSingleton<TService>(this IServiceCollection services, bool condition)
+        where TService : class
+    {
+        
+    }
+
     public static void TryAddScoped<TService, TImplementation>(this IServiceCollection services, bool condition) 
         where TService : class
         where TImplementation : class, TService

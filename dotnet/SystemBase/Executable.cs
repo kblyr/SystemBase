@@ -7,6 +7,7 @@ public interface IExecutable : IDisposable
 
 public interface IExecutionResult {}
 
+
 public record ExecutionSuccess : IExecutionResult
 {
     static readonly ExecutionSuccess _instance = new();
@@ -25,13 +26,42 @@ public record ExecutionError : IExecutionResult
     protected ExecutionError() {}
 }
 
-[AttributeUsage(AttributeTargets.Class)]
-public class ExecutionResultAttribute(string key, bool isEmpty = false) : Attribute
+public readonly record struct ExecutionResultProfile
 {
-    readonly string _key = key;
-    readonly bool _isEmpty = isEmpty;
+    public string Key { get; init; }
+    public bool IsEmpty { get; init;  }
+    public Type Type { get; init; }
+}
 
-    public string Key => _key;
+public interface IExecutionResultRegistry
+{
+    IExecutionResultRegistry Register<T>(string key, bool isEmpty = false) where T : IExecutionResult;
+    bool TryGetProfile<T>(out ExecutionResultProfile profile);
+}
 
-    public bool IsEmpty => _isEmpty;
+sealed class ExecutionResultRegistry : IExecutionResultRegistry
+{
+    readonly Dictionary<Type, ExecutionResultProfile> _entries = [];
+
+    public bool TryGetProfile<T>(out ExecutionResultProfile profile)
+    {
+        return _entries.TryGetValue(typeof(T), out profile);
+    }
+
+    public IExecutionResultRegistry Register<T>(string key, bool isEmpty = false) where T : IExecutionResult
+    {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return this;
+        }
+
+        var type = typeof(T);
+        _entries.TryAdd(type, new ExecutionResultProfile { 
+            Key = key, 
+            IsEmpty = isEmpty, 
+            Type = type
+        });
+
+        return this;
+    }
 }
