@@ -101,7 +101,7 @@ sealed class TimestampAuditInfoSource(Func<DateTimeOffset> factory) : IAuditInfo
 
     public ValueTask Load(AuditInfo info, CancellationToken cancellationToken = default)
     {
-        info.Set(AuditInfo.Keys.Timestamp, _factory);
+        info.Set(AuditInfo.Keys.Timestamp, () => _factory());
         return ValueTask.CompletedTask;
     }
 }
