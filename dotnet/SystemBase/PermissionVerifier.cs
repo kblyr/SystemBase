@@ -7,9 +7,7 @@ public interface IPermissionVerifier
 }
 
 sealed class PermissionVerifier(IPermissionsLoader permissionsLoader) : IPermissionVerifier
-{
-    readonly IPermissionsLoader _permissionsLoader = permissionsLoader;
-    
+{   
     PermissionsLoaderResult? _loaderResult;
 
     public async ValueTask<bool> IsAdministrator(CancellationToken cancellationToken = default)
@@ -30,6 +28,6 @@ sealed class PermissionVerifier(IPermissionsLoader permissionsLoader) : IPermiss
 
     async ValueTask<PermissionsLoaderResult> TryLoad(CancellationToken cancellationToken)
     {
-        return _loaderResult ??= await _permissionsLoader.Load(cancellationToken) ?? new();
+        return _loaderResult ??= await permissionsLoader.Load(cancellationToken) ?? new();
     }
 }

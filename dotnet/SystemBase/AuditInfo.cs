@@ -8,6 +8,9 @@ public sealed class AuditInfo
 
     internal AuditInfo() {}
 
+    CachedAuditInfo? _cached;
+    public CachedAuditInfo Cached => _cached ??= new(this);
+
     public T Get<T>(string key)
     {
         if (_source.TryGetValue(key, out IAuditInfoValue? value) && value.Value is T genericValue)
@@ -40,8 +43,25 @@ public sealed class AuditInfo
 
     public static class Keys
     {
-        public const string Timestamp   = "SystemBase:Timestamp";
-        public const string UserId      = "SystemBase:UserId";
+        public static string Timestamp { get; set; } = "SystemBase:Timestamp";
+        public static string UserId { get; set; } = "SystemBase:UserId";
+    }
+}
+
+public sealed class CachedAuditInfo(AuditInfo source)
+{
+    readonly ConcurrentDictionary<string, object?> _cached = new();
+
+    public T Get<T>(string key)
+    {
+        if (_cached.TryGetValue(key, out object? cachedValue) && cachedValue is T genericCachedValue)
+        {
+            return genericCachedValue;
+        }
+
+        var value = source.Get<T>(key);
+        _cached.AddOrUpdate(key, value, (existingKey, existingValue) => value);
+        return value;
     }
 }
 
@@ -57,15 +77,12 @@ sealed class AuditInfoValueReadOnly(object? value) : IAuditInfoValue
 
 sealed class AuditInfoValueFactory(Func<object?> factory) : IAuditInfoValue
 {
-    readonly Func<object?> _factory = factory;
-    public object? Value => _factory();
+    public object? Value => factory();
 }
 
 sealed class AuditInfoValueDependentFactory(AuditInfo info, Func<AuditInfo, object?> factory) : IAuditInfoValue
 {
-    readonly AuditInfo _info = info;
-    readonly Func<AuditInfo, object?> _factory = factory;
-    public object? Value => _factory(_info);
+    public object? Value => factory(info);
 }
 
 public interface IAuditInfoSource
@@ -76,32 +93,35 @@ public interface IAuditInfoSource
 public interface IAuditInfoProvider 
 {
     ValueTask<AuditInfo> Get(CancellationToken cancellationToken = default);
+    ValueTask<CachedAuditInfo> GetCached(CancellationToken cancellationToken = default);
 }
 
 sealed class AuditInfoProvider(IEnumerable<IAuditInfoSource> sources) : IAuditInfoProvider
 {
-    readonly IEnumerable<IAuditInfoSource> _sources = sources;
+    AuditInfo? _auditInfo;
+    AuditInfo AuditInfo => _auditInfo ??= new();
 
     public async ValueTask<AuditInfo> Get(CancellationToken cancellationToken = default)
     {
-        var auditInfo = new AuditInfo();
-
-        foreach(var source in _sources)
+        foreach(var source in sources)
         {
-            await source.Load(auditInfo, cancellationToken);
+            await source.Load(AuditInfo, cancellationToken);
         }
 
-        return auditInfo;
+        return AuditInfo;
+    }
+
+    public async ValueTask<CachedAuditInfo> GetCached(CancellationToken cancellationToken = default)
+    {
+        return (await Get(cancellationToken)).Cached;
     }
 }
 
 sealed class TimestampAuditInfoSource(Func<DateTimeOffset> factory) : IAuditInfoSource
 {
-    readonly Func<DateTimeOffset> _factory = factory;
-
     public ValueTask Load(AuditInfo info, CancellationToken cancellationToken = default)
     {
-        info.Set(AuditInfo.Keys.Timestamp, () => _factory());
+        info.Set(AuditInfo.Keys.Timestamp, () => factory());
         return ValueTask.CompletedTask;
     }
 }

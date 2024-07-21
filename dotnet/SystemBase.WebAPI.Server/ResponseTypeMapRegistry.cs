@@ -25,7 +25,6 @@ public record struct ResponseTypeMapDefinition
 sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScanner) : IResponseTypeMapRegistry
 {
     readonly Dictionary<Type, ResponseTypeMapDefinition> _definitions = [];
-    readonly ResponseTypeMapAssemblyScanner _assemblyScanner = assemblyScanner;
 
     public ResponseTypeMapDefinition? this[Type responseType]
     {
@@ -36,9 +35,9 @@ sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScan
                 return _definitions[responseType];
             }
 
-            if (!_assemblyScanner.IsScanned)
+            if (!assemblyScanner.IsScanned)
             {
-                _assemblyScanner.Scan(this);
+                assemblyScanner.Scan(this);
                 return this[responseType];
             }
 
@@ -70,9 +69,9 @@ sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScan
             return true;
         }
 
-        if (!_assemblyScanner.IsScanned)
+        if (!assemblyScanner.IsScanned)
         {
-            _assemblyScanner.Scan(this);
+            assemblyScanner.Scan(this);
             return TryGet(responseType, out definition);
         }
 
@@ -83,24 +82,22 @@ sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScan
 
 public sealed class ResponseTypeMapAssemblyScanner(Assembly[] assemblies)
 {
-    readonly Assembly[] _assemblies = assemblies;
-
     public bool IsScanned { get; private set; }
 
     public void Scan(IResponseTypeMapRegistry registry)
     {
         IsScanned = true;
 
-        if (_assemblies.Length == 0)
+        if (assemblies.Length == 0)
         {
             return;
         }
 
         var t_marker = typeof(IResponseTypeMapRegistration);
 
-        for (int assemblyIdx = 0; assemblyIdx < _assemblies.Length; assemblyIdx++)
+        for (int assemblyIdx = 0; assemblyIdx < assemblies.Length; assemblyIdx++)
         {
-            var t_registrations = _assemblies[assemblyIdx].GetTypes().Where(t =>
+            var t_registrations = assemblies[assemblyIdx].GetTypes().Where(t =>
                 !t.IsAbstract
                 && !t.IsGenericType
                 && t.GetInterfaces().Any(t_interface => t_interface == t_marker)

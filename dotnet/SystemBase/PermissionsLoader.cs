@@ -8,5 +8,5 @@ public interface IPermissionsLoader
 public sealed record PermissionsLoaderResult
 {
     public bool IsAdministrator { get; init; }
-    public int[] PermissionIds { get; init; } = Array.Empty<int>();
+    public int[] PermissionIds { get; init; } = [];
 }

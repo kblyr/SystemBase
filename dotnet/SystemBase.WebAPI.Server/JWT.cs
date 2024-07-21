@@ -2,7 +2,7 @@ namespace SystemBase;
 
 public sealed record JWTOptions
 {
-    public const string CONFIGKEY = "SystemBase:JWT";
+    public static string CONFIGKEY { get; set; } = "SystemBase:JWT";
 
     public string Key { get; set; } = "";
     public TimeSpan Expiration { get; set; } = TimeSpan.FromHours(1);
