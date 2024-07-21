@@ -5,14 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>Kblyr.SystemBase</PackageId>
-    <Version>0.8.2</Version>
+    <Version>0.8.3</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Hashids.net" Version="1.7.0" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
     <PackageReference Include="NewId" Version="4.0.1" />
   </ItemGroup>

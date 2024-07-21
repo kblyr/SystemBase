@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>Kblyr.SystemBase.EF.PostgreSQL</PackageId>
-    <Version>0.8.0</Version>
+    <Version>0.8.3</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>

@@ -5,13 +5,13 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>Kblyr.SystemBase.EF</PackageId>
-    <Version>0.8.0</Version>
+    <Version>0.8.3</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
   </ItemGroup>
 
   <ItemGroup>
