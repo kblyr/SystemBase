@@ -37,5 +37,5 @@ public static class IServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection AddUserIdAuditInfo(this IServiceCollection services, string claimType = "User.Id") => services.AddAuditInfoSource(sp => new UserIdAuditInfoSource(sp.GetRequiredService<IHttpContextAccessor>(), claimType));
+    public static IServiceCollection AddUserIdAuditInfo(this IServiceCollection services, Func<ClaimsPrincipal, object?> getFromClaims) => services.AddAuditInfoSource(sp => new UserIdAuditInfoSource(sp.GetRequiredService<IHttpContextAccessor>(), getFromClaims));
 }

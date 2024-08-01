@@ -14,7 +14,7 @@ public sealed record DependencyOptions : IDependencyOptions
 
 public sealed record ResponseTypeMapRegistrySettings : IDependencyFeatureSettings
 {
-    Assembly[] _assemblies = Array.Empty<Assembly>();
+    Assembly[] _assemblies = [];
     public Assembly[] Assemblies
     {
         get => _assemblies;
