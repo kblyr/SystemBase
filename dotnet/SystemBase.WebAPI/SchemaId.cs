@@ -8,9 +8,9 @@ public class SchemaIdAttribute(string schemaId) : Attribute
 
 public static class SchemaIds
 {
-    public const string Success                 = "res:success";
-    public const string Failed                  = "res:failed";
-    public const string PermissionNotFound      = "res:permissionnotfound";
-    public const string ValidationFailed        = "res:validationfailed";
-    public const string VerifyPermissionFailed  = "res:verifypermissionfailed";
+    public static string Success { get; set; } = "res:success";
+    public static string Failed { get; set; } = "res:failed";
+    public static string PermissionNotFound { get; set; } = "res:permissionnotfound";
+    public static string ValidationFailed { get; set; } = "res:validationfailed";
+    public static string VerifyPermissionFailed { get; set; } = "res:verifypermissionfailed";
 }

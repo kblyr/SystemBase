@@ -18,7 +18,7 @@ sealed class RandomStringGenerator : IRandomStringGenerator
 
     public string Generate(int length, char[] chars)
     {
-        if (length <= 0 || chars is null || chars.Length == 0)
+        if (length <= 0 || chars is { Length: 0 })
         {
             return "";
         }
