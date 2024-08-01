@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 
 namespace SystemBase;
 
-public sealed class AuditInfo
+public class AuditInfo
 {
     readonly ConcurrentDictionary<string, IAuditInfoValue> _source = new();
 
@@ -11,7 +11,7 @@ public sealed class AuditInfo
     CachedAuditInfo? _cached;
     public CachedAuditInfo Cached => _cached ??= new(this);
 
-    public T Get<T>(string key)
+    public virtual T Get<T>(string key)
     {
         if (_source.TryGetValue(key, out IAuditInfoValue? value) && value.Value is T genericValue)
         {
@@ -48,11 +48,11 @@ public sealed class AuditInfo
     }
 }
 
-public sealed class CachedAuditInfo(AuditInfo source)
+public sealed class CachedAuditInfo(AuditInfo source) : AuditInfo
 {
     readonly ConcurrentDictionary<string, object?> _cached = new();
 
-    public T Get<T>(string key)
+    public override T Get<T>(string key)
     {
         if (_cached.TryGetValue(key, out object? cachedValue) && cachedValue is T genericCachedValue)
         {
