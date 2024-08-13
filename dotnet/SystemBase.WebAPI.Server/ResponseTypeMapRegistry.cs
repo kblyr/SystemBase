@@ -1,3 +1,4 @@
+using System.Collections.Concurrent;
 using System.Reflection;
 
 namespace SystemBase;
@@ -24,15 +25,15 @@ public record struct ResponseTypeMapDefinition
 
 sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScanner) : IResponseTypeMapRegistry
 {
-    readonly Dictionary<Type, ResponseTypeMapDefinition> _definitions = [];
+    readonly ConcurrentDictionary<Type, ResponseTypeMapDefinition> _definitions = [];
 
     public ResponseTypeMapDefinition? this[Type responseType]
     {
         get
         {
-            if (_definitions.ContainsKey(responseType))
+            if (_definitions.TryGetValue(responseType, out ResponseTypeMapDefinition value))
             {
-                return _definitions[responseType];
+                return value;
             }
 
             if (!assemblyScanner.IsScanned)
@@ -53,11 +54,7 @@ sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScan
 
     public IResponseTypeMapRegistry Register(Type responseType, Type apiResponseType, int statusCode)
     {
-        if (!_definitions.ContainsKey(responseType))
-        {
-            _definitions.Add(responseType, new(responseType, apiResponseType, statusCode));
-        }
-
+        _definitions.TryAdd(responseType, new(responseType, apiResponseType, statusCode));
         return this;
     }
 
