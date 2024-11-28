@@ -7,4 +7,5 @@
   "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
   "editor.tabSize": 4,
   "prettier.vueIndentScriptAndStyle": true,
+  "editor.minimap.enabled": false,
 }
