@@ -14,7 +14,13 @@ public class ResponseTypeAttribute<T> : ResponseTypeAttribute where T : Response
 
 public record ResponseType
 {
-    public string Name { get; set; } = "";
+    string? _name;
+    public string Name 
+    {
+        get => _name ?? StringUtilities.ToSnakeCase(GetType().Name);
+        set => _name = value;
+    }
+    
     public ResponseStatusCode StatusCode { get; set; } = ResponseStatusCode.Default();
 }
 

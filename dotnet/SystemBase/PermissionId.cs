@@ -2,7 +2,13 @@ namespace SystemBase;
 
 public record PermissionId 
 {
-    public string Id { get; set; } = "";
+    string? _id;
+    public string Id 
+    {
+        get => _id ?? StringUtilities.ToSnakeCase(GetType().Name);
+        set => _id = value;
+    }
+    
 
     static readonly KeyedCachedData<Type, PermissionId> _cached = new();
 
@@ -16,9 +22,4 @@ public record PermissionId
         
         return _cached.Set(type, new T());
     }
-}
-
-public static class PermissionIds
-{
-    
 }
