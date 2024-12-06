@@ -589,29 +589,29 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 public interface IHashedIdFactory
 {
     IHashedId Create(string salt, int minLength);
-    IHashedIdByte Byte(string salt, int minLength);
-    IHashedIdInt16 Int16(string salt, int minLength);
-    IHashedIdInt32 Int32(string salt, int minLength);
-    IHashedIdInt64 Int64(string salt, int minLength);
-    IHashedIdGuid Guid(string salt, int minLength);
+    IHashedId<byte> Byte(string salt, int minLength);
+    IHashedId<short> Int16(string salt, int minLength);
+    IHashedId<int> Int32(string salt, int minLength);
+    IHashedId<long> Int64(string salt, int minLength);
+    IHashedId<Guid> Guid(string salt, int minLength);
 }
 
 sealed class HashedIdFactory : IHashedIdFactory
 {
     public IHashedId Create(string salt, int minLength) => new HashedId(salt, minLength);
 
-    public IHashedIdByte Byte(string salt, int minLength) => new HashedIdByte(new Hashids(salt, minLength));
+    public IHashedId<byte> Byte(string salt, int minLength) => new HashedIdByte(new Hashids(salt, minLength));
 
-    public IHashedIdInt16 Int16(string salt, int minLength) => new HashedIdInt16(new Hashids(salt, minLength));
+    public IHashedId<short> Int16(string salt, int minLength) => new HashedIdInt16(new Hashids(salt, minLength));
 
-    public IHashedIdInt32 Int32(string salt, int minLength) => new HashedIdInt32(new Hashids(salt, minLength));
+    public IHashedId<int> Int32(string salt, int minLength) => new HashedIdInt32(new Hashids(salt, minLength));
 
-    public IHashedIdInt64 Int64(string salt, int minLength) => new HashedIdInt64(new Hashids(salt, minLength));
+    public IHashedId<long> Int64(string salt, int minLength) => new HashedIdInt64(new Hashids(salt, minLength));
 
-    public IHashedIdGuid Guid(string salt, int minLength) => new HashedIdGuid(new Hashids(salt, minLength));
+    public IHashedId<Guid> Guid(string salt, int minLength) => new HashedIdGuid(new Hashids(salt, minLength));
 }
 
-public interface IHashedIdPrimitive<T> where T : notnull
+public interface IHashedId<T> where T : notnull
 {
     string ToHash(T id);
     string[] ToHashes(T[] ids);
@@ -623,13 +623,7 @@ public interface IHashedIdPrimitive<T> where T : notnull
     T[]? FromNullableHashes(string[]? hashedIds);
 }
 
-public interface IHashedIdByte : IHashedIdPrimitive<byte> {}
-public interface IHashedIdInt16 : IHashedIdPrimitive<short> {}
-public interface IHashedIdInt32 : IHashedIdPrimitive<int> {}
-public interface IHashedIdInt64 : IHashedIdPrimitive<long> {}
-public interface IHashedIdGuid : IHashedIdPrimitive<Guid> {}
-
-public abstract class HashedIdPrimitiveBase<T> where T : notnull
+public abstract class HashedIdBase<T> where T : notnull
 {
     protected abstract T Decode(string hashedId);
 
@@ -652,35 +646,35 @@ public abstract class HashedIdPrimitiveBase<T> where T : notnull
     public virtual T[]? FromNullableHashes(string[]? hashedIds) => hashedIds is null ? null : FromHashes(hashedIds);
 }
 
-sealed class HashedIdByte(Hashids ids) : HashedIdPrimitiveBase<byte>, IHashedIdByte
+sealed class HashedIdByte(Hashids ids) : HashedIdBase<byte>, IHashedId<byte>
 {
     protected override byte Decode(string hashedId) => Convert.ToByte(ids.DecodeSingle(hashedId));
 
     protected override string Encode(byte id) => ids.Encode(id);
 }
 
-sealed class HashedIdInt16(Hashids ids) : HashedIdPrimitiveBase<short>, IHashedIdInt16
+sealed class HashedIdInt16(Hashids ids) : HashedIdBase<short>, IHashedId<short>
 {
     protected override short Decode(string hashedId) => Convert.ToInt16(ids.DecodeSingle(hashedId));
 
     protected override string Encode(short id) => ids.Encode(id);
 }
 
-sealed class HashedIdInt32(Hashids ids) : HashedIdPrimitiveBase<int>, IHashedIdInt32
+sealed class HashedIdInt32(Hashids ids) : HashedIdBase<int>, IHashedId<int>
 {
     protected override int Decode(string hashedId) => ids.DecodeSingle(hashedId);
 
     protected override string Encode(int id) => ids.Encode(id);
 }
 
-sealed class HashedIdInt64(Hashids ids) : HashedIdPrimitiveBase<long>, IHashedIdInt64
+sealed class HashedIdInt64(Hashids ids) : HashedIdBase<long>, IHashedId<long>
 {
     protected override long Decode(string hashedId) => ids.DecodeSingleLong(hashedId);
 
     protected override string Encode(long id) => ids.EncodeLong(id);
 }
 
-sealed class HashedIdGuid(Hashids ids) : HashedIdPrimitiveBase<Guid>, IHashedIdGuid
+sealed class HashedIdGuid(Hashids ids) : HashedIdBase<Guid>, IHashedId<Guid>
 {
     protected override Guid Decode(string hashedId) => new(ids.Decode(hashedId).Select(Convert.ToByte).ToArray());
 
