@@ -88,7 +88,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return _hashids.Decode(hash).Select(Convert.ToByte).ToArray();
+            return [.. _hashids.Decode(hash).Select(Convert.ToByte)];
         }
         catch
         {
@@ -105,7 +105,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return hashes.Select(ToByte).ToArray();
+            return [.. hashes.Select(ToByte)];
         }
         catch
         {
@@ -156,7 +156,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return _hashids.Decode(hash).Select(Convert.ToInt16).ToArray();
+            return [.. _hashids.Decode(hash).Select(Convert.ToInt16)];
         }
         catch
         {
@@ -173,7 +173,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return hashes.Select(ToInt16).ToArray();
+            return [.. hashes.Select(ToInt16)];
         }
         catch
         {
@@ -241,7 +241,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return hashes.Select(ToInt32).ToArray();
+            return [.. hashes.Select(ToInt32)];
         }
         catch
         {
@@ -309,7 +309,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return hashes.Select(ToInt64).ToArray();
+            return [.. hashes.Select(ToInt64)];
         }
         catch
         {
@@ -326,7 +326,7 @@ sealed class HashedId(string salt, int minLength) : IHashedId
 
         try
         {
-            return new Guid(_hashids.Decode(hash).Select(Convert.ToByte).ToArray());
+            return new Guid([.. _hashids.Decode(hash).Select(Convert.ToByte)]);
         }
         catch
         {
@@ -676,7 +676,7 @@ sealed class HashedIdInt64(Hashids ids) : HashedIdBase<long>, IHashedId<long>
 
 sealed class HashedIdGuid(Hashids ids) : HashedIdBase<Guid>, IHashedId<Guid>
 {
-    protected override Guid Decode(string hashedId) => new(ids.Decode(hashedId).Select(Convert.ToByte).ToArray());
+    protected override Guid Decode(string hashedId) => new([.. ids.Decode(hashedId).Select(Convert.ToByte)]);
 
     protected override string Encode(Guid id) => ids.Encode(id.ToByteArray().Select(Convert.ToInt32));
 }
