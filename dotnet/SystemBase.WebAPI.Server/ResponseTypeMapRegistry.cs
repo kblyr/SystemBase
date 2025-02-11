@@ -54,7 +54,8 @@ sealed class ResponseTypeMapRegistry(ResponseTypeMapAssemblyScanner assemblyScan
 
     public IResponseTypeMapRegistry Register(Type responseType, Type apiResponseType, int statusCode)
     {
-        _definitions.TryAdd(responseType, new(responseType, apiResponseType, statusCode));
+        var value = new ResponseTypeMapDefinition(responseType, apiResponseType, statusCode);
+        _definitions.AddOrUpdate(responseType, value, (existingKey, existingValue) => value);
         return this;
     }
 

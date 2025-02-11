@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>Kblyr.SystemBase.WebAPI.Server</PackageId>
-    <Version>0.8.3</Version>
+    <Version>0.8.4</Version>
     <Authors>John Josua Paderon</Authors>
     <Company>Kblyr</Company>
   </PropertyGroup>
